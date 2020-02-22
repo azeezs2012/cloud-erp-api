@@ -1,0 +1,53 @@
+{
+    "name": "stancl/tenancy",
+    "description": "A Laravel multi-database tenancy package that respects your code.",
+    "keywords": ["laravel", "multi-tenancy", "multi-database", "tenancy"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Štancl",
+            "email": "samuel.stancl@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-json": "*",
+        "illuminate/support": "^6.0",
+        "facade/ignition-contracts": "^1.0",
+        "ramsey/uuid": "^3.7"
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^3.3",
+        "laravel/telescope": "^2.0",
+        "laravel/framework": "^6.0",
+        "orchestra/testbench-browser-kit": "^4.0",
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "phpunit/phpcov": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stancl\\Tenancy\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stancl\\Tenancy\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Stancl\\Tenancy\\TenancyServiceProvider"
+            ],
+            "aliases": {
+                "Tenant": "Stancl\\Tenancy\\Facades\\TenantFacade",
+                "Tenancy": "Stancl\\Tenancy\\Facades\\TenancyFacade",
+                "GlobalCache": "Stancl\\Tenancy\\Facades\\GlobalCacheFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

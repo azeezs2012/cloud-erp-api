@@ -12,12 +12,5 @@
 */
 
 Route::get('/', function () {
-    $domains = ['saleem.pas-cloud.online'];
-            $tenant = Tenant::create($domains, [
-                'plan' => 'free',
-            ]);
-            \Artisan::call('tenants:migrate', [
-                '--tenants' => [$tenant->id]
-            ]);
     return view('welcome');
 });

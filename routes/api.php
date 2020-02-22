@@ -18,12 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('tenancy')->group(function () {
-    /*Route::get('/', function(){
-        if(DB::connection()->getDatabaseName())
-        {
-            echo "Connected sucessfully to database ".DB::connection()->getDatabaseName().".";
-        }
-        
-    });*/
-    Route::get('/','AccountController@getAccountTypes');
+    Route::get('/app/account_types','AccountController@getAccountTypes');
+    
 });
+
+Route::get('/', function(){
+    return "Welcome to pas-cloud Central Api";
+});
+
