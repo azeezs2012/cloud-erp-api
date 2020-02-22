@@ -18,8 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('tenancy')->group(function () {
-    Route::get('/app/account_types','AccountController@getAccountTypes');
-    
+    Route::get('/pas/account_types','AccountController@getAccountTypes');
+    Route::get('/pas', function(){
+        return "Welcome to pas-cloud Tenant Api";
+    });
 });
 
 Route::get('/', function(){

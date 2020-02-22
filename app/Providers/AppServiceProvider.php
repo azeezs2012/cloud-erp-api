@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Stancl\Tenancy\Middleware\InitializeTenancy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /*$this->app->bind(InitializeTenancy::class, function ($app) {
+            return new InitializeTenancy(function ($exception) {
+                return redirect('/');
+            });
+        });*/
     }
 }
