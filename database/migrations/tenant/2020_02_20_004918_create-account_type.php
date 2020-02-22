@@ -13,15 +13,17 @@ class CreateAccountType extends Migration
      */
     public function up()
     {
-        Schema::create('account_type', function (Blueprint $table) {
+        Schema::create('acct_type', function (Blueprint $table) {
             $table->smallIncrements('id');
-            $table->string('account_type_name')->unique();
-            $table->string('account_type_display_name');
+            $table->string('acct_type_name')->unique();
+            $table->string('acct_type_short_name');
+            $table->string('acct_type_display_name');
         });
 
-        DB::table('account_type')->insert([
-            'account_type_name' => 'Cash',
-            'account_type_display_name' => 'Cash'
+        DB::table('acct_type')->insert([
+            'acct_type_name' => 'Cash',
+            'acct_short_name' => 'CASH',
+            'acct_type_display_name' => 'Cash'
         ]);
     }
 
