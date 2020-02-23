@@ -61,6 +61,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+        
+        /*foreach (config('tenancy.exempt_domains', []) as $domain) {
+            Route::middleware('web')
+                ->domain($domain)
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+        }*/
     }
 
     /**
@@ -76,5 +83,13 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+        
+        /*foreach (config('tenancy.exempt_domains', []) as $domain) {
+            Route::prefix('api')
+                ->middleware('api')
+                ->domain($domain)
+                ->namespace($this->namespace)
+                ->group(base_path('routes/api.php'));
+        }*/
     }
 }
