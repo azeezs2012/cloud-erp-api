@@ -24,7 +24,5 @@ Route::middleware('tenancy')->group(function () {
     });
 });
 
-Route::get('/', function(){
-    return "Welcome to pas-cloud Central Api";
-});
+Route::post('/tenant', 'TenantController@createTenant');
 
