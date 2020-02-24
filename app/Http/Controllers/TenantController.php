@@ -10,6 +10,8 @@ use DateTime;
 use Illuminate\Http\Request;
 use Stancl\Tenancy\Exceptions\DomainsOccupiedByOtherTenantException;
 use Illuminate\Support\Facades\Validator;
+use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedException;
+use Stancl\Tenancy\Exceptions\TenantDoesNotExistException;
 
 class TenantController extends Controller
 {
@@ -31,6 +33,39 @@ class TenantController extends Controller
             return response()->json($response,201);
         }catch (DomainsOccupiedByOtherTenantException $exception){
             $response =  APIHelpers::createAPIResponse(true,400,'One or more of the tenant\'s domains are already occupied by another tenant',null);
+            return response()->json($response,400);
+        }
+    }
+
+    function getTenants(Request $request){
+        $response =  APIHelpers::createAPIResponse(false,200,null,tenancy()->all());
+        return response()->json($response,200);
+    }
+
+    function getTenantById(Request $request, $id){
+        try {
+            $tenants = tenancy()->find($id);
+            $response =  APIHelpers::createAPIResponse(false,200,null,$tenants);
+            return response()->json($response,200);
+        } catch (TenantCouldNotBeIdentifiedException $e) {
+            $response =  APIHelpers::createAPIResponse(true,400,$e->getMessage(),null);
+            return response()->json($response,$e->getCode());
+        } catch (TenantDoesNotExistException $e2){
+            $response =  APIHelpers::createAPIResponse(true,400,$e2->getMessage(),null);
+            return response()->json($response,400);
+        }
+    }
+
+    function getTenantByDomain(Request $request, $domain){
+        try {
+            $tenants = tenancy()->findByDomain($domain);
+            $response =  APIHelpers::createAPIResponse(false,200,null,$tenants);
+            return response()->json($response,200);
+        } catch (TenantCouldNotBeIdentifiedException $e1) {
+            $response =  APIHelpers::createAPIResponse(true,400,$e1->getMessage(),null);
+            return response()->json($response,$e1->getCode());
+        } catch (TenantDoesNotExistException $e2){
+            $response =  APIHelpers::createAPIResponse(true,400,$e2->getMessage(),null);
             return response()->json($response,400);
         }
     }
