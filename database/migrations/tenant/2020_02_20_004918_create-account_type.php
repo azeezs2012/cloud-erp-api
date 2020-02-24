@@ -22,7 +22,7 @@ class CreateAccountType extends Migration
 
         DB::table('acct_type')->insert([
             'acct_type_name' => 'Cash',
-            'acct_short_name' => 'CASH',
+            'acct_type_short_name' => 'CASH',
             'acct_type_display_name' => 'Cash'
         ]);
     }
