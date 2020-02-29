@@ -93,7 +93,7 @@ return [
     ],
     'home_url' => '/app',
     'queue_database_creation' => false,
-    'migrate_after_creation' => false, // run migrations after creating a tenant
+    'migrate_after_creation' => true, // run migrations after creating a tenant
     'migration_parameters' => [
         // '--force' => true, // force database migrations
     ],
@@ -103,7 +103,7 @@ return [
         // '--force' => true, // force database seeder
     ],
     'queue_database_deletion' => false,
-    'delete_database_after_tenant_deletion' => false, // delete the tenant's database after deleting the tenant
+    'delete_database_after_tenant_deletion' => true, // delete the tenant's database after deleting the tenant
     'unique_id_generator' => Stancl\Tenancy\UniqueIDGenerators\UUIDGenerator::class,
     'global_middleware' => [
         Stancl\Tenancy\Middleware\InitializeTenancy::class,

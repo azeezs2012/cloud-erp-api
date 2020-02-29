@@ -26,6 +26,14 @@ Route::middleware('tenancy')->group(function () {
 
 Route::post('/tenant', 'TenantController@createTenant');
 Route::get('/tenant', 'TenantController@getTenants');
-Route::get('/tenant_id/{id}', 'TenantController@getTenantById');
-Route::get('/tenant_domain/{domain}', 'TenantController@getTenantByDomain');
+Route::get('/tenant_by_id/{id}', 'TenantController@getTenantById');
+Route::get('/tenant_by_domain/{domain}', 'TenantController@getTenantByDomain');
+Route::delete('/tenant/{id}', 'TenantController@deleteTenant');
+Route::put('/tenant/{id}', 'TenantController@updateTenant');
+Route::get('/tenant_migrate', 'TenantController@migrateAllTenants');
+Route::get('/tenant_migrate/{id}', 'TenantController@migrateTenant');
+
+
+
+
 

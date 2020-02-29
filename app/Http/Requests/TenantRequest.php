@@ -30,6 +30,11 @@ class TenantRequest extends FormRequest
                 'email' => 'required|email'
             ];
         }
+        else if($this->isMethod('PUT')){
+            return [
+                'plan' => 'required',
+            ];
+        }
         else{
             return [];
         }
