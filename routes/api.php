@@ -17,12 +17,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('tenancy')->group(function () {
+Route::middleware('tenancy')->
+    group(function () {
     Route::get('/pas/account_types','ListControllers\AccountController@getAccountTypes');
+
+    Route::get('/pas/branch','ListControllers\BranchController@getBranches');
+
+    Route::get('/pas/user','ListControllers\UserController@getUsers');
+    Route::post('/pas/user','ListControllers\UserController@createUser');
+
     Route::get('/pas', function(){
         return "Welcome to pas-cloud Tenant Api";
     });
 });
+
+
+
 
 Route::post('/tenant', 'TenantController@createTenant');
 Route::get('/tenant', 'TenantController@getTenants');

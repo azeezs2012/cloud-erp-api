@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\APIHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TenantRequest;
+use App\Models\ModuleModel;
+use App\Models\SubscriptionModel;
+use App\Models\SubscriptionTypeModel;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -19,17 +22,30 @@ class TenantController extends Controller
         try{
             $domain_name = $request->input('tenant_name') . "." . config('pas.domain_name');
             $domains = [$domain_name];
-            $date = Carbon::now();
-            $date->addDays(30);
+
             $tenant = \Tenant::create($domains, [
-                'plan' => $request->input('plan'),
-                'email' => $request->input('email'),
-                'valid_till' => $date
+                'email' => $request->input('email')
             ]);
             /*\Artisan::call('tenants:migrate', [
                 '--tenants' => [$tenant->id]
             ]);*/
-            $response =  APIHelpers::createAPIResponse(false,201,'Tenant created successfully',$tenant);
+            $subscription = new SubscriptionModel();
+            $subscription->tenant_id = $tenant->id;
+            $subscription->subscription_type_id = $request->input('subscription_type_id');
+            $subscription->subscription_status_id = $request->input('subscription_status_id');
+            $subscription->created_at = Carbon::now();
+            $subscription->started_on = Carbon::now();
+            $subscription->last_renewed_on = null;
+            if(SubscriptionTypeModel::find($subscription->subscription_type_id)->subscription_type_name=='Month Basis'){
+                $subscription->end_on = Carbon::now()->addDays(30);
+            }
+            else if(SubscriptionTypeModel::find($subscription->subscription_type_id)->subscription_type_name=='Annual Basis'){
+                $subscription->end_on = Carbon::now()->addDays(360);
+            }
+            $subscription->save();
+            $subscription->Modules()->saveMany(ModuleModel::all());
+            $subscription->modules = $subscription->Modules()->allRelatedIds();
+            $response =  APIHelpers::createAPIResponse(false,201,'Tenant created successfully',[$tenant,$subscription]);
             return response()->json($response,201);
         }catch (DomainsOccupiedByOtherTenantException $exception){
             $response =  APIHelpers::createAPIResponse(true,400,$exception->getMessage(),null);

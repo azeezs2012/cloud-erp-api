@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TenantRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,18 @@ class TenantRequest extends FormRequest
     {
         if($this->isMethod('POST')){
             return [
-                'tenant_name' => 'required|max:10|min:4',
-                'plan' => 'required',
-                'email' => 'required|email'
+                'username' => 'required',
+                'password' => 'required',
+                'is_active' => 'required',
+                'is_approved' => 'required'
             ];
         }
         else if($this->isMethod('PUT')){
             return [
-                'plan' => 'required',
+                'username' => 'required',
+                'password' => 'required',
+                'is_active' => 'required',
+                'is_approved' => 'required'
             ];
         }
         else{

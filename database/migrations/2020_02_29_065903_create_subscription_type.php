@@ -17,6 +17,15 @@ class CreateSubscriptionType extends Migration
             $table->smallIncrements('id');
             $table->string('subscription_type_name');
         });
+
+        DB::table('subscription_type')->insert([
+            'subscription_type_name' => 'Month Basis'
+        ]);
+
+        DB::table('subscription_type')->insert([
+            'subscription_type_name' => 'Annual Basis'
+        ]);
+
     }
 
     /**

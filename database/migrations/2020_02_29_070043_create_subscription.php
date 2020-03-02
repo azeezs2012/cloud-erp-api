@@ -18,8 +18,6 @@ class CreateSubscription extends Migration
 
             $table->string('tenant_id');
             $table->foreign('tenant_id')->references('id')->on('tenants');
-            $table->smallInteger('plan_id')->unsigned();
-            $table->foreign('plan_id')->references('id')->on('plan');
             $table->smallInteger('subscription_type_id')->unsigned();
             $table->foreign('subscription_type_id')->references('id')->on('subscription_type');
             $table->smallInteger('subscription_status_id')->unsigned();
