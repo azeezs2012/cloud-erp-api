@@ -18,6 +18,11 @@ use Stancl\Tenancy\Exceptions\TenantDoesNotExistException;
 
 class TenantController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('auth:api');
+    }
+
     function createTenant(TenantRequest $request){
         try{
             $domain_name = $request->input('tenant_name') . "." . config('pas.domain_name');

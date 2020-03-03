@@ -16,16 +16,12 @@ class UserAuthentication
      */
     public function handle($request, Closure $next)
     {
-        /*tenancy()->initialize(tenancy()->getTenant());
-
-        tenancy()->end();*/
-        $user = User::where('remember_token',$request->header('UserToken'))->first();
+        $user = auth()->user();
         if(!is_null($user)){
             return $next($request);
         }
         else{
-            return false;
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
-
     }
 }

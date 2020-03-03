@@ -13,19 +13,26 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
+    //return $request->user();
+    return "jhouipjhpo";
+});*/
 
-Route::middleware('tenancy')->
+Route::middleware(
+    ['tenancy']
+    )->
     group(function () {
-    Route::get('/pas/account_types','ListControllers\AccountController@getAccountTypes');
+    Route::post('/pas/login','AuthController@login');
+    Route::post('/pas/logout', 'AuthController@logout');
+    Route::post('/pas/refresh', 'AuthController@refresh');
+    Route::post('/pas/me', 'AuthController@me');
 
-    Route::get('/pas/branch','ListControllers\BranchController@getBranches');
-
-    Route::get('/pas/user','ListControllers\UserController@getUsers');
-    Route::post('/pas/user','ListControllers\UserController@createUser');
-
+    Route::group(['middleware' => 'user_auth'], function () {
+        Route::get('/pas/branch','ListControllers\BranchController@getBranches');
+        Route::get('/pas/account_types','ListControllers\AccountController@getAccountTypes');
+        Route::get('/pas/user','ListControllers\UserController@getUsers');
+        Route::post('/pas/user','ListControllers\UserController@createUser');
+    });
     Route::get('/pas', function(){
         return "Welcome to pas-cloud Tenant Api";
     });

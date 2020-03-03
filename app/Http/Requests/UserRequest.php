@@ -25,16 +25,18 @@ class UserRequest extends FormRequest
     {
         if($this->isMethod('POST')){
             return [
-                'username' => 'required',
+                'name' => 'required',
                 'password' => 'required',
+                'email' => 'required',
                 'is_active' => 'required',
                 'is_approved' => 'required'
             ];
         }
         else if($this->isMethod('PUT')){
             return [
-                'username' => 'required',
+                'name' => 'required',
                 'password' => 'required',
+                'email' => 'required',
                 'is_active' => 'required',
                 'is_approved' => 'required'
             ];
